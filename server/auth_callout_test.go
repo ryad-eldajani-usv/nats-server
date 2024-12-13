@@ -1847,7 +1847,7 @@ func testConfClientClose(t *testing.T, respondNil bool) {
 	// This one will use callout since not defined in server config.
 	_, err := at.NewClient(nats.UserInfo("a", "x"))
 	require_Error(t, err)
-	require_True(t, strings.Contains(strings.ToLower(err.Error()), nats.AUTHORIZATION_ERR))
+	require_True(t, strings.Contains(strings.ToLower(err.Error()), "nats: auth callout"))
 }
 
 func TestAuthCallout_ClientAuthErrorConf(t *testing.T) {
@@ -1922,7 +1922,7 @@ func testAuthCall_ClientAuthErrorOperatorMode(t *testing.T, respondNil bool) {
 	// is signed with the account signing key
 	_, err = ac.NewClient(nats.UserCredentials(creds))
 	require_Error(t, err)
-	require_True(t, strings.Contains(strings.ToLower(err.Error()), nats.AUTHORIZATION_ERR))
+	require_True(t, strings.Contains(strings.ToLower(err.Error()), "nats: auth callout"))
 }
 
 func TestAuthCallout_ClientAuthErrorOperatorMode(t *testing.T) {

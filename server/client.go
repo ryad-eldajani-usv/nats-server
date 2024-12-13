@@ -2207,6 +2207,10 @@ func (c *client) accountAuthExpired() {
 }
 
 func (c *client) authViolation() {
+	c.authViolationWithErrorMsg("Authorization Violation")
+}
+
+func (c *client) authViolationWithErrorMsg(authErrorMsg string) {
 	var s *Server
 	var hasTrustedNkeys, hasNkeys, hasUsers bool
 	if s = c.srv; s != nil {
@@ -2236,7 +2240,7 @@ func (c *client) authViolation() {
 	if c.isMqtt() {
 		c.mqttEnqueueConnAck(mqttConnAckRCNotAuthorized, false)
 	} else {
-		c.sendErr("Authorization Violation")
+		c.sendErr(authErrorMsg)
 	}
 	c.closeConnection(AuthenticationViolation)
 }

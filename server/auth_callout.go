@@ -241,7 +241,7 @@ func (s *Server) processClientOrLeafCallout(c *client, opts *Options) (authorize
 
 		arc, err := decodeResponse(rc, rmsg, racc)
 		if err != nil {
-			c.authViolation()
+			c.authViolationWithErrorMsg(err.Error())
 			respCh <- titleCase(err.Error())
 			return
 		}
